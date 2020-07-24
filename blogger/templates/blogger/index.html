@@ -1,0 +1,15 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'templates/css/index.css' %}">
+    <title>Welcome</title>
+</head>
+<body>
+<div class="container">
+    <a class="btn btn-trans" href="{% url 'blog:login' %}">Login</a>
+    <a class="btn btn-trans" href="{% url 'blog:signup' %}">SignUp</a>
+</div>
+</body>
+</html>

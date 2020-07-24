@@ -1,0 +1,188 @@
+@font-face {
+  font-family: Montserrat-Regular;
+  src: url('../fonts/montserrat/Montserrat-Regular.ttf');
+}
+
+* {
+	margin: 0px;
+	padding: 0px;
+	box-sizing: border-box;
+}
+
+body{
+    background-image: url("../img/index.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    position: relative;
+}
+
+#head{
+    height: 150px;
+    width: 100%  ;
+    color: #EED6D3;
+    padding-top: 50px;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+}
+
+.pro_head{
+    text-align: center;
+    color: white;
+    margin: 10px 0 10px 0;
+}
+
+.container{
+    color: #B4ADEA;
+    width: 400px;
+    height: 130px;
+    margin: 100px 0 0 500px;
+    padding-top: 50px;
+    border-style: groove;
+    border-radius: 30px;
+    border-color: #9892B5;
+    border-width: thick;
+    text-decoration: none;
+    text-align: center;
+    overflow: auto;
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.5);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+}
+
+.container1{
+    height: 750px;
+    width: 50%;
+    margin-left: 350px;
+    border-style: groove;
+    border-radius: 50px;
+    background-color: #1b1e21;
+    overflow: auto;
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.5);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+}
+
+.head{
+    height: 50px;
+    width: 100px;
+    margin-left: 500px;
+    border-style: groove;
+    border-color: #9892B5;
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.5);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+}
+
+.pro_pic{
+    height: 200px;
+    width: 200px;
+    margin: 20px 0 0 230px;
+    border-style: groove;
+    border-radius: 20px;
+}
+
+.label-field{
+    font-family: Montserrat-Regular;
+    font-size: 18px;
+      color: #999999;
+      line-height: 1.2;
+}
+
+.disp{
+    margin: 10px 0 0 35px;
+    padding-top: 15px;
+    width: 90%;
+    height: 60px;
+    border: 1px solid #e6e6e6;
+    border-radius: 10px;
+    text-align: center;
+}
+
+#txt{
+    margin-left: 5px;
+    color: #D7A098;
+    font-size: 20px;
+    text-decoration: none;
+}
+
+.form_cont{
+    color: #B4ADEA;
+    height: 350px;
+    width: 500px;
+    margin: 100px 0 0 450px;
+    border-style: groove;
+    border-color: #9892B5;
+    border-width: thick;
+    text-decoration: none;
+    text-align: center;
+    overflow: auto;
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.5);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+}
+
+.list_cont{
+    color: #B4ADEA;
+    height: 300px;
+    width: 500px;
+    margin: 100px 0 0 450px;
+    border-style: groove;
+    border-color: #9892B5;
+    border-width: thick;
+    border-radius: 50px;
+    text-decoration: none;
+    text-align: center;
+    overflow: auto;
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.5);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+}
+
+#date{
+    padding: 20px 0 0 300px;
+}
+
+#name{
+    padding: 0 300px 0 0;
+}
+
+.inp{
+    margin-top: 40px;
+}
+
+.btn{
+  border: 3px solid #ffffff;
+  padding: 15px 35px;
+  font-weight: bolder;
+  text-decoration: none;
+  color: #ffffff;
+  margin-right: 15px;
+   background-color: rgba(0, 0, 0, 0.5);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+
+}
+
+
+.btn-fill{
+  background-color: #D7A098;
+  color: #000000;
+}
+
+.btn-fill:hover{
+  background-color: #978DE2;
+  border-color: transparent;
+}
+
+.btn-trans:hover{
+  background-color: #D7A098;
+  color: #000000;
+  border-color: transparent;
+}

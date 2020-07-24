@@ -1,0 +1,16 @@
+* {
+	margin: 0px;
+	padding: 0px;
+	box-sizing: border-box;
+}
+
+body{
+    background-image: url("../img/blog.jpg");
+    background-size: cover;
+    background-attachment:fixed;
+    position: relative;
+}
+
+.login100-more{
+    background-image: url("../img/bg-01.jpg");
+}

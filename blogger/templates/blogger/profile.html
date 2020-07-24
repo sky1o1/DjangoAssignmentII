@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'templates/css/index.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'templates/css/util.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'templates/css/main.css' %}">
+    <title>Profile</title>
+</head>
+<body>
+
+<div id="head">
+    <a class="btn" id="txt" href="{% url 'blog:home' %}">Home</a>
+    <a class="btn" id="txt" href="{% url 'blog:list' %}">List</a>
+    <a class="btn" id="txt" href="{% url 'blog:create' %}">Create</a>
+</div>
+
+<div class="pro_head">
+    <h2>PROFILE</h2>
+</div>
+<div class="container1">
+    <div class="pro_pic">
+        <img style="size: 50px;" src="{% static 'templates/img/dp.jpg'%}">
+    </div>
+    <div class="disp" style="margin-top: 20px;">
+        <span class="label-field"><b>Username:</b> {{request.user.username}}</span>
+    </div>
+
+     <div class="disp">
+        <span class="label-field"><b>First Name:</b> {{request.user.first_name}}</span>
+    </div>
+
+     <div class="disp">
+        <span class="label-field"><b>Last Name:</b> {{request.user.last_name}}</span>
+    </div>
+
+     <div class="disp">
+        <span class="label-field"><b>Email:</b> {{request.user.email}}</span>
+    </div>
+
+     <div class="disp">
+        <span class="label-field"><b>Id:</b> {{request.user.id}}</span>
+    </div>
+
+    <div class="disp">
+        <span class="label-field"><b>Bio:</b> {{request.user.bio}}</span>
+    </div>
+
+    <div style="padding: 30px 0 0 270px">
+        <a class="btn"  href="{% url 'blog:edit' %}">EDIT</a>
+    </div>
+
+</div>
+</body>
+</html>
