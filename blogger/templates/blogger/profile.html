@@ -1,4 +1,5 @@
 {% load static %}
+{% load cache %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,9 +10,10 @@
     <title>Profile</title>
 </head>
 <body>
-
+{% cache 500 body request.user %}
 <div id="head">
     <a class="btn" id="txt" href="{% url 'blog:home' %}">Home</a>
+    <a class="btn" id="txt" href="{% url 'blog:profile' %}">Profile</a>
     <a class="btn" id="txt" href="{% url 'blog:list' %}">List</a>
     <a class="btn" id="txt" href="{% url 'blog:create' %}">Create</a>
 </div>
@@ -21,14 +23,14 @@
 </div>
 <div class="container1">
     <div class="pro_pic">
-        <img style="size: 50px;" src="{% static 'templates/img/dp.jpg'%}">
+        <img width="195px" height="195px" style="border-radius: 20px;" src="{% static 'templates/img/dp.jpg'%}">
     </div>
     <div class="disp" style="margin-top: 20px;">
-        <span class="label-field"><b>Username:</b> {{request.user.username}}</span>
+        <span class="label-field"><b>Username:</b> {{ request.user.username }}</span>
     </div>
 
      <div class="disp">
-        <span class="label-field"><b>First Name:</b> {{request.user.first_name}}</span>
+        <span class="label-field"><b>First Name:</b> {{ request.user.first_name}}</span>
     </div>
 
      <div class="disp">
@@ -39,18 +41,21 @@
         <span class="label-field"><b>Email:</b> {{request.user.email}}</span>
     </div>
 
-     <div class="disp">
-        <span class="label-field"><b>Id:</b> {{request.user.id}}</span>
-    </div>
 
     <div class="disp">
         <span class="label-field"><b>Bio:</b> {{request.user.bio}}</span>
     </div>
 
-    <div style="padding: 30px 0 0 270px">
-        <a class="btn"  href="{% url 'blog:edit' %}">EDIT</a>
+    <div style="padding: 60px 0 0 270px">
+        <a class="btn"  href="/blog/edit/{{ request.user.id }}/">EDIT</a>
     </div>
-
+{#    <form method="post" enctype="multipart/form-data">#}
+{#        {% csrf_token %}#}
+{#        <input name="bio">{{form.bio}}#}
+{#        <input type="file" name="myfile"><br>#}
+{#        <button type="submit">UPLOAD</button>#}
+{#    </form>#}
 </div>
 </body>
+{% endcache %}
 </html>

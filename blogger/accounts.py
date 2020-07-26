@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 
 USER = get_user_model()
 
+
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=150)
     email = forms.EmailField()
@@ -27,3 +28,4 @@ class SignUpForm(forms.Form):
         confirm_password = self.cleaned_data['confirm_password']
         if password != confirm_password:
             raise forms.ValidationError('password not matched')
+

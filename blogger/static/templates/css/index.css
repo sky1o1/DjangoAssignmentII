@@ -186,3 +186,16 @@ body{
   color: #000000;
   border-color: transparent;
 }
+
+.crud-btn{
+    text-decoration: none;
+    width: 70px;
+    border-radius: 20px;
+    height: 30px;
+}
+
+/*.container1 span{*/
+/*    background-color: #1b1e21;*/
+/*    width: 500px;*/
+/*    height: 100px;*/
+/*}*/

@@ -1,15 +1,23 @@
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from .forms import BlogForm
+from django.urls import reverse_lazy
+
+from .forms import BlogForm, AuthorForm, EditForm
 from .accounts import LoginForm, SignUpForm
 from .models import UserDetail, BlogTable
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.decorators import login_required
+from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView, TemplateView
+from django.views.decorators.cache import cache_page
 from django.core.files.storage import FileSystemStorage
+from django.core.mail import send_mail, EmailMultiAlternatives
+from django.template.loader import get_template
 
 USER = get_user_model()
 
 
+# @cache_page(60)
 def login_view(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
@@ -34,8 +42,21 @@ def login_view(request):
 
 
 @login_required(login_url='/blog/login/')
-def home_view(request):
+def home(request):
+
+    # html_file = get_template('blogger/mail_template.html')
+    # html_content = html_file.render()
+    # sub = 'Test'
+    # from_email = 'test@gmail.com'
+    # recipients = [request.user.email, ]
+    # msg = EmailMultiAlternatives(subject=sub, from_email=from_email, to=recipients)
+    # msg.attach_alternative(html_content, 'text/html')
+    # msg.send()
     return render(request, 'blogger/home.html')
+
+
+# class HomeView(TemplateView):
+#     template_name = 'blogger/home.html'
 
 
 def logout_view(request):
@@ -47,9 +68,7 @@ def signup_view(request):
     form = SignUpForm()
     if request.method == 'POST':
         form = SignUpForm(request.POST)
-        file_obj = request.FILES['myfile']
         if form.is_valid():
-            print(form.cleaned_data)
             user = USER(
                 first_name=form.cleaned_data['first_name'],
                 last_name=form.cleaned_data['last_name'],
@@ -57,8 +76,6 @@ def signup_view(request):
                 password=form.cleaned_data['password'],
                 email=form.cleaned_data['email'],
             )
-            fs = FileSystemStorage()
-            fs.save(file_obj.name, file_obj)
             user.save()
             user.set_password(form.cleaned_data['password'])
             user.save()
@@ -74,44 +91,27 @@ def index_view(request):
     return render(request, 'blogger/index.html')
 
 
-# def register_form(request):
-#     registered = False
-#     user_details = Register()  # username, pass, email
-#     bio_details = UserInfoForm()  # name , dob
-#
-#     if request.method == 'POST':
-#         user_details = Register(request.POST)
-#         bio_details = UserInfoForm(request.POST)
-#
-#         if user_details.is_valid() and bio_details.is_valid():
-#             user_instance = user_details.save()
-#             user_instance.set_password(user_instance.password)
-#             user_instance.save()
-#             profile = bio_details.save(commit=False)
-#             profile.user = user_instance
-#             profile.save()
-#             registered = True
-#             return redirect('/login/')
-#
-#         else:
-#             print(user_details.errors, bio_details.errors)
-#
-#     return render(request, 'templates/register.html',
-#                   {'user_details': user_details, 'bio_details': bio_details, 'pageTitle': 'Register Form'})
-#
+# class Create(CreateView):
+    # form_class = BlogForm
+    # model = BlogTable
+    # template_name = 'blogger/create.html'
+    # success_url = reverse_lazy('blog:list')
 
 def create_view(request):
-    blog_form = BlogForm()
+    blog_form = BlogForm(request.POST)
     if request.method == 'POST':
-        blog_form = BlogForm(request.POST)
+
         if blog_form.is_valid():
-            blog_form.save()
+            instance = blog_form.save(commit=False)
+            instance.author = request.user
+            instance.save()
             print(request.POST)
             print("successfully saved")
-            return redirect('/blog/home/')
+            return redirect('/blog/list/')
         else:
             return HttpResponse("Form is not valid")
-    return render(request, 'blogger/create.html/', {'form2': blog_form})
+    else:
+        return render(request, 'blogger/create.html/', {'form2': blog_form})
 
 
 def list_view(request):
@@ -122,27 +122,90 @@ def list_view(request):
     return render(request, 'blogger/list.html/', context)
 
 
-def profile_view(request):
-    return render(request, 'blogger/profile.html/')
+# class List(ListView):
+#     model = BlogTable
+#     template_name = 'blogger/list.html'
+#     context_object_name = 'data'
+#
+
+class ProfileView(ListView):
+    model = User
+    template_name = 'blogger/profile.html'
+
+    # return render(request, 'blogger/profile.html/')
 
 
-def edit_view(request):
+def edit_view(request, user_id):
+    obj1 = get_object_or_404(USER, id=user_id)
+    # obj2 = get_object_or_404(UserDetail, id=user_id)
+
     if request.method == 'POST':
-        form = SignUpForm(request.POST, instance=UserDetail)
-        if form.is_valid():
-            print(form.cleaned_data)
-            user = USER(
-                first_name=form.cleaned_data['first_name'],
-                last_name=form.cleaned_data['last_name'],
-                username=form.cleaned_data['username'],
-                password=form.cleaned_data['password'],
-            )
-            user.save()
-            user.set_password(form.cleaned_data['password'])
-            user.save()
-            return redirect('/blog/login')
+        form1 = AuthorForm(request.POST, instance=obj1)
+        print('data', form1)
+        # form2 = EditForm(request.POST, instance=obj2)
+        if form1.is_valid():
+            form1.save()
+            return redirect('/blog/profile/')
         else:
             return HttpResponse('error')
     elif request.method == 'GET':
-        form = SignUpForm(instance=UserDetail)
-    return render(request, 'blogger/edit.html', {'form': form})
+        print('test')
+        form1 = AuthorForm(instance=obj1)
+        form2 = EditForm()
+    return render(request, 'blogger/edit.html', {'form1': form1, 'form2': form2})
+
+
+# class ProfileEdit(UpdateView):
+#     form_class = AuthorForm
+#     pk_url_kwarg = 'user_id'
+#     model = User, UserDetail
+#     template_name = 'blogger/edit.html'
+#     success_url = '/blog/profile/'
+
+
+def blog_edit_view(request, user_id):
+    bg = get_object_or_404(BlogTable, id=user_id)
+    blog_form = BlogForm()
+    if request.method == 'POST':
+        blog_form = BlogForm(request.POST, instance=bg)
+        if blog_form.is_valid():
+            instance = blog_form.save(commit=False)
+            instance.author = request.user
+            instance.save()
+            print(request.POST)
+            print("successfully saved")
+            return redirect('/blog/list/')
+        else:
+            return HttpResponse("Form is not valid")
+    else:
+        blog_form = BlogForm(instance=bg)
+    return render(request, 'blogger/create.html/', {'form2': blog_form})
+
+
+# class BlogEdit(UpdateView):
+#     form_class = BlogForm
+#     model = BlogTable
+#     pk_url_kwarg = 'user_id'
+#     success_url = '/blog/list/'
+#
+
+def delete_blog_view(request, user_id):
+    del_obj = get_object_or_404(BlogTable, id=user_id)
+    del_obj.delete()
+    return redirect('/blog/list/')
+
+# class Delete(DeleteView):
+#     model = BlogTable
+#     success_url = '/blog/list'
+#     pk_url_kwarg = 'user_id'
+#
+
+
+# def upload_view(request):
+#     if request.method == 'POST':
+#         form = EditForm(request.FILES['myfile'])
+#         if form.is_valid():
+#             form.save()
+#         else:
+#             return HttpResponse("error")
+#     return render(request, 'blog/profile/', {'form': form})

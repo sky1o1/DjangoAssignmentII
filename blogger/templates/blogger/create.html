@@ -8,19 +8,21 @@
 </head>
 <body>
 <div id="head">
-        <a class="btn" id="txt" href="{% url 'blog:home' %}">Home</a>
-        <a class="btn" id="txt" href="{% url 'blog:profile' %}">Profile</a>
-        <a class="btn" id="txt" href="{% url 'blog:list' %}">List</a>
+           <a class="btn" id="txt" href="{% url 'blog:home' %}">Home</a>
+            <a class="btn" id="txt" href="{% url 'blog:profile' %}">Profile</a>
+            <a class="btn" id="txt" href="{% url 'blog:list' %}">List</a>
+            <a class="btn" id="txt" href="{% url 'blog:create' %}">Create</a>
 </div>
 <div class="form_cont">
     <form method="post">
         {% csrf_token %}
         <div class="inp">
             <div>
-               <label>Title: {{form2.title}}</label>
+                <input type="text" name="title" placeholder="tile">
             </div>
              <div style="padding-top: 20px;">
                <label>Bio: {{form2.blog}}</label>
+{#                 <input type="text" name="blog" placeholder="blog">#}
             </div>
         </div>
         <div style="padding-top: 20px;">

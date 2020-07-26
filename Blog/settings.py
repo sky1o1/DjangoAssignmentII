@@ -83,6 +83,20 @@ DATABASES = {
 }
 
 
+CACHES = {
+        'default':{
+            'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+            'LOCATION': 'Cache_Table'
+        }
+}
+
+# CACHES = {
+#         'default':{
+#             'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+#             'LOCATION': '/home/python/Insights/DjangoAssignment/Blog/cache_file'
+#         }
+# }
+
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
@@ -107,7 +121,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'GMT'
 
 USE_I18N = True
 
@@ -121,6 +135,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+EMAIL_HOST = 'smtp.mailtrap.io'
+EMAIL_HOST_USER = '907e30a513ddef'
+EMAIL_HOST_PASSWORD = 'ee3e4e0174d4af'
+EMAIL_PORT = '2525'
 
 # AUTH_USER_MODEL = 'blogger.User'
 

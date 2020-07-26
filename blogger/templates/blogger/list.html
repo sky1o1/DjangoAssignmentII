@@ -8,9 +8,10 @@
 </head>
 <body>
 <div id="head">
-        <a class="btn" id="txt" href="{% url 'blog:home' %}">Home</a>
-        <a class="btn" id="txt" href="{% url 'blog:profile' %}">Profile</a>
-        <a class="btn" id="txt" href="{% url 'blog:create' %}">Create</a>
+          <a class="btn" id="txt" href="{% url 'blog:home' %}">Home</a>
+    <a class="btn" id="txt" href="{% url 'blog:profile' %}">Profile</a>
+    <a class="btn" id="txt" href="{% url 'blog:list' %}">List</a>
+    <a class="btn" id="txt" href="{% url 'blog:create' %}">Create</a>
 </div>
 
 {% for d in data %}
@@ -18,9 +19,16 @@
 
     <h1>{{d.title}}</h1><br>
     <p>{{d.blog}}</p>
-
     <div id="date">{{d.created_at}}</div>
-    <div id="name">-{{d.user.email}}</div>
+    <div id="name">-{{d.author}}</div>
+    {% if request.user.id ==  d.author.id  %}
+        <button class="crud-btn"><a style="text-decoration: none;" href="/blog/blog-edit/{{ d.id }}/"><b>Edit</b></a></button>
+{#        <form method="post" action="/blog/blog-delete/{{ d.id }}/">#}
+{#            {% csrf_token %}#}
+{#            <button class="crud-btn"><a style="text-decoration: none;" ><b>Delete</b></a></button>#}
+{#        </form>#}
+        <button class="crud-btn"><a style="text-decoration: none;" href="/blog/blog-delete/{{ d.id }}/"><b>Delete</b></a></button>
+    {% endif %}
 </div>
 {% endfor %}
 

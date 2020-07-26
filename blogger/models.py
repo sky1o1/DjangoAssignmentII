@@ -3,13 +3,13 @@ from django.contrib.auth.models import User
 
 
 class UserDetail(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    profile_pic = models.ImageField(blank=True, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='profile')
+    profile_pic = models.ImageField(upload_to='pro_pic/', blank=True, null=True)
     bio = models.TextField(max_length=200, default='No bio')
 
 
 class BlogTable(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     blog = models.TextField(max_length=1000)
     created_at = models.DateField(auto_now_add=True)

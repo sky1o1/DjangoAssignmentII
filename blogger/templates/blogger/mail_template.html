@@ -1,0 +1,15 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'templates/css/index.css' %}">
+    <title>temp</title>
+</head>
+<body style="background-color: aqua">
+    <div class="container">
+        <h1>Verify your email</h1>
+        <span>CLICK HERE TO VERIFY: <button><a href="{% url 'blog:home' %}">VERIFY</a></button></span>
+    </div>
+</body>
+</html>
