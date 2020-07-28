@@ -75,9 +75,12 @@ def signup_view(request):
                 username=form.cleaned_data['username'],
                 password=form.cleaned_data['password'],
                 email=form.cleaned_data['email'],
+                profile_pic=form.cleaned_data['profile_pic']
             )
+
             user.save()
             user.set_password(form.cleaned_data['password'])
+
             user.save()
             return redirect('/blog/login')
         else:
@@ -115,9 +118,9 @@ def create_view(request):
 
 
 def list_view(request):
-    model_form = BlogTable.objects.all()
+    model = BlogTable.objects.all()
     context = {
-        'data': model_form,
+        'data': model,
     }
     return render(request, 'blogger/list.html/', context)
 
