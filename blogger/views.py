@@ -68,6 +68,7 @@ def signup_view(request):
     form = SignUpForm()
     if request.method == 'POST':
         form = SignUpForm(request.POST)
+        form2 = EditForm(request.POST)
         if form.is_valid():
             user = USER(
                 first_name=form.cleaned_data['first_name'],
@@ -75,9 +76,10 @@ def signup_view(request):
                 username=form.cleaned_data['username'],
                 password=form.cleaned_data['password'],
                 email=form.cleaned_data['email'],
-                profile_pic=form.cleaned_data['profile_pic']
             )
-
+            file_obj = request.FILES['myfile']
+            fs = FileSystemStorage()
+            fs.save(file_obj.name, file_obj)
             user.save()
             user.set_password(form.cleaned_data['password'])
 
